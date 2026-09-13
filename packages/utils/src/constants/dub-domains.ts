@@ -1,6 +1,6 @@
 import { DUB_WORKSPACE_ID, SHORT_DOMAIN } from "./main";
 
-export const DUB_DOMAINS = [
+const DUB_DOMAINS_LIST = [
   {
     id: "clce1z7ch00j0rbstbjufva4j",
     slug: SHORT_DOMAIN,
@@ -132,6 +132,11 @@ export const DUB_DOMAINS = [
     projectId: DUB_WORKSPACE_ID,
   },
 ];
+
+// Self-hosted instances must not advertise Dub-owned shared domains.
+export const DUB_DOMAINS = process.env.NEXT_PUBLIC_APP_SHORT_DOMAIN
+  ? DUB_DOMAINS_LIST.filter(({ slug }) => slug === SHORT_DOMAIN)
+  : DUB_DOMAINS_LIST;
 
 export const DUB_DOMAINS_ARRAY = DUB_DOMAINS.map((domain) => domain.slug);
 
